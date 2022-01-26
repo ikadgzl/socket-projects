@@ -18,9 +18,15 @@ const Card = ({ post, socket, user }) => {
   });
 
   const handleInteractions = (e) => {
-    setLiked((prevLiked) => !prevLiked);
+    const type = e.target.name;
 
-    socket.emit('sendNotification', getNotificationInfo(e.target.name));
+    if (type === 'liked' || type === 'dislike') {
+      setLiked((prevLiked) => !prevLiked);
+    }
+
+    if (type !== undefined && type !== 'info') {
+      socket.emit('sendNotification', getNotificationInfo(type));
+    }
   };
 
   return (
@@ -36,20 +42,20 @@ const Card = ({ post, socket, user }) => {
         {liked ? (
           <img
             src={HeartFilled}
-            name='filledHeart'
+            name='dislike'
             alt='filled heart svg'
             className='cardIcon'
           />
         ) : (
-          <img src={Heart} name='heart' alt='heart svg' className='cardIcon' />
+          <img src={Heart} name='liked' alt='heart svg' className='cardIcon' />
         )}
         <img
           src={Comment}
-          name='comment'
+          name='commented'
           alt='comment svg'
           className='cardIcon'
         />
-        <img src={Share} name='share' alt='share svg' className='cardIcon' />
+        <img src={Share} name='shared' alt='share svg' className='cardIcon' />
         <img
           src={Info}
           name='info'

@@ -1,4 +1,5 @@
 .navbar {
+  position: relative;
   height: 64px;
   background-color: lightseagreen;
 
@@ -45,4 +46,28 @@
 
   top: -8px;
   right: -4px;
+}
+
+.notifications {
+  position: absolute;
+  top: 64px;
+  right: 0;
+  background-color: white;
+  color: black;
+  font-weight: 300;
+
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.notification {
+  padding: 5px;
+  font-size: 14px;
+}
+
+.notificationButton {
+  width: 80%;
+  padding: 5px;
+  margin-top: 10px;
 }

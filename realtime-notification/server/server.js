@@ -25,13 +25,20 @@ io.on('connection', (socket) => {
   socket.on('newUser', (username) => {
     addNewUser(username, socket.id);
   });
-  console.log(onlineUsers);
 
   socket.on('sendNotification', ({ senderName, receiverName, type }) => {
     const receiver = getUser(receiverName).socketId;
 
     if (receiver) {
       io.to(receiver).emit('getNotification', { senderName, type });
+    }
+  });
+
+  socket.on('sendMessage', ({ senderName, receiverName, message }) => {
+    const receiver = getUser(receiverName).socketId;
+
+    if (receiver) {
+      io.to(receiver).emit('getMessage', { senderName, message });
     }
   });
 

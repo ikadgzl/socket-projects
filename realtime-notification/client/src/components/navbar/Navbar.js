@@ -3,8 +3,17 @@ import './navbar.css';
 import Notification from '../../img/notification.svg';
 import Message from '../../img/message.svg';
 import Settings from '../../img/settings.svg';
+import { useEffect, useState } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ socket }) => {
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    socket.on('getNotification', (a) => {
+      console.log(a);
+    });
+  }, [socket]);
+
   return (
     <div className='navbar'>
       <span className='logo'>Realtime App</span>

@@ -8,19 +8,19 @@ import Comment from '../../img/comment.svg';
 import Share from '../../img/share.svg';
 import Info from '../../img/info.svg';
 
-const Card = ({ post }) => {
+const Card = ({ post, socket, user }) => {
   const [liked, setLiked] = useState(false);
 
-  const handleInteractions = (e) => {
-    switch (e.target.name) {
-      case 'heart':
-      case 'filledHeart':
-        setLiked((prevLiked) => !prevLiked);
-        break;
+  const getNotificationInfo = (type) => ({
+    senderName: user,
+    receiverName: post.username,
+    type
+  });
 
-      default:
-        break;
-    }
+  const handleInteractions = (e) => {
+    setLiked((prevLiked) => !prevLiked);
+
+    socket.emit('sendNotification', getNotificationInfo(e.target.name));
   };
 
   return (

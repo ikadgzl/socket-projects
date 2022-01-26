@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import './card.css';
 
 import Heart from '../../img/heart.svg';
@@ -7,6 +9,20 @@ import Share from '../../img/share.svg';
 import Info from '../../img/info.svg';
 
 const Card = ({ post }) => {
+  const [liked, setLiked] = useState(false);
+
+  const handleInteractions = (e) => {
+    switch (e.target.name) {
+      case 'heart':
+      case 'filledHeart':
+        setLiked((prevLiked) => !prevLiked);
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <div className='card'>
       <div className='info'>
@@ -16,11 +32,30 @@ const Card = ({ post }) => {
 
       <img src={post.postImg} alt={post.postImg} className='postImg' />
 
-      <div className='interaction'>
-        <img src={Heart} alt='heart svg' className='cardIcon' />
-        <img src={Comment} alt='comment svg' className='cardIcon' />
-        <img src={Share} alt='share svg' className='cardIcon' />
-        <img src={Info} alt='info svg' className='cardIcon infoIcon' />
+      <div className='interaction' onClick={handleInteractions}>
+        {liked ? (
+          <img
+            src={HeartFilled}
+            name='filledHeart'
+            alt='filled heart svg'
+            className='cardIcon'
+          />
+        ) : (
+          <img src={Heart} name='heart' alt='heart svg' className='cardIcon' />
+        )}
+        <img
+          src={Comment}
+          name='comment'
+          alt='comment svg'
+          className='cardIcon'
+        />
+        <img src={Share} name='share' alt='share svg' className='cardIcon' />
+        <img
+          src={Info}
+          name='info'
+          alt='info svg'
+          className='cardIcon infoIcon'
+        />
       </div>
     </div>
   );
